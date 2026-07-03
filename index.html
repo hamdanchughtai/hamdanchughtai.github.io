@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Hamdan Chughtai — Developer</title>
-<meta name="description" content="Hamdan Chughtai — 18, Lahore, Pakistan. Coding enthusiast learning web development, building projects, and documenting the journey.">
+<meta name="description" content="Hamdan Chughtai — 20, Lahore, Pakistan. Coding enthusiast learning web development, building projects, and documenting the journey.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%2314151a%22/><text x=%2250%22 y=%2266%22 font-size=%2255%22 fill=%22%238fd693%22 font-family=%22monospace%22 text-anchor=%22middle%22>&lt;/&gt;</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -104,8 +104,69 @@
 
   /* ---------- Hero ---------- */
   .hero{
-    padding:88px 0 64px;
+    padding:56px 0 60px;
+    position:relative;
+    overflow:hidden;
   }
+  @media (max-width:640px){
+    .hero{padding:40px 0 48px;}
+  }
+  .hero-inner{
+    display:flex;
+    align-items:center;
+    gap:48px;
+    justify-content:space-between;
+  }
+  .hero-text{flex:1; min-width:0;}
+  .hero-photo{
+    flex-shrink:0;
+    width:200px;
+  }
+  .photo-frame{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:8px;
+    animation:photoIn .7s ease .2s both;
+  }
+  @keyframes photoIn{
+    from{opacity:0; transform:translateY(-10px) scale(.96);}
+    to{opacity:1; transform:translateY(0) scale(1);}
+  }
+  .photo-tab{
+    font-family:var(--mono);
+    font-size:10.5px;
+    color:var(--comment);
+    padding:2px 4px 8px;
+    display:flex;
+    align-items:center;
+    gap:6px;
+  }
+  .photo-tab::before{
+    content:'';
+    width:7px; height:7px;
+    border-radius:50%;
+    background:var(--accent-green);
+  }
+  .photo-frame img{
+    display:block;
+    width:100%;
+    aspect-ratio:1/1;
+    object-fit:cover;
+    border-radius:8px;
+    border:1px solid var(--border);
+    filter:grayscale(15%);
+    transition:filter .3s ease, transform .3s ease;
+  }
+  .photo-frame:hover img{
+    filter:grayscale(0%);
+    transform:scale(1.02);
+  }
+  @media (max-width:700px){
+    .hero-inner{flex-direction:column-reverse; gap:28px; text-align:left;}
+    .hero-photo{width:140px; align-self:flex-start;}
+  }
+
   .eyebrow{
     font-family:var(--mono);
     font-size:13px;
@@ -268,6 +329,34 @@
     color:var(--accent-amber);
     border-color:rgba(232,176,85,.3);
   }
+  .skill-pill.learned{
+    color:var(--accent-green);
+    border-color:rgba(143,214,147,.35);
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+  }
+  .skill-pill .check{
+    font-size:11px;
+    color:var(--accent-green);
+  }
+  .skill-pill{
+    opacity:0;
+    transform:translateY(8px) scale(.96);
+    animation:pillIn .5s ease forwards;
+  }
+  @keyframes pillIn{
+    to{opacity:1; transform:translateY(0) scale(1);}
+  }
+  .skill-pill:hover{
+    transform:translateY(-2px) scale(1.04) !important;
+    box-shadow:0 6px 16px rgba(0,0,0,.25);
+  }
+  .skills-list .skill-pill:nth-child(1){animation-delay:.05s;}
+  .skills-list .skill-pill:nth-child(2){animation-delay:.15s;}
+  .skills-list .skill-pill:nth-child(3){animation-delay:.25s;}
+  .skills-list .skill-pill:nth-child(4){animation-delay:.35s;}
+  .skills-list .skill-pill:nth-child(5){animation-delay:.45s;}
 
   /* ---------- Projects ---------- */
   .projects{
@@ -364,8 +453,34 @@
     flex-shrink:0;
   }
   .connect-icon svg{width:19px; height:19px;}
+  .connect-meta{min-width:0; flex:1;}
   .connect-meta .name{font-size:14.5px; font-weight:600; color:var(--text);}
-  .connect-meta .handle{font-family:var(--mono); font-size:12px; color:var(--comment);}
+  .connect-meta .handle{
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--comment);
+    overflow-wrap:break-word;
+    word-break:break-word;
+  }
+
+  .connect-wide{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+    margin-top:14px;
+  }
+  @media (max-width:560px){
+    .connect-wide{grid-template-columns:1fr;}
+  }
+  .connect-card.wide{
+    padding:22px 24px;
+  }
+  .connect-card.wide .connect-icon{
+    width:44px; height:44px;
+  }
+  .connect-card.wide .connect-icon svg{width:21px; height:21px;}
+  .connect-card.wide .name{font-size:15.5px;}
+  .connect-card.wide .handle{font-size:12.5px;}
 
   /* ---------- Footer ---------- */
   footer{
@@ -399,6 +514,112 @@
     animation:pulse 2s ease-in-out infinite;
   }
 
+  /* ---------- Scroll progress bar ---------- */
+  .progress-bar{
+    position:fixed;
+    top:0; left:0;
+    height:2px;
+    width:0%;
+    background:linear-gradient(90deg, var(--accent-green), var(--accent-blue));
+    z-index:100;
+    transition:width .1s ease-out;
+  }
+
+  /* ---------- Ambient glow blobs ---------- */
+  .hero{position:relative; overflow:hidden;}
+  .blob{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(70px);
+    opacity:.16;
+    pointer-events:none;
+    z-index:0;
+  }
+  .blob.b1{
+    width:280px; height:280px;
+    background:var(--accent-green);
+    top:-80px; right:-40px;
+    animation:float1 9s ease-in-out infinite;
+  }
+  .blob.b2{
+    width:220px; height:220px;
+    background:var(--accent-blue);
+    bottom:-60px; left:10%;
+    animation:float2 11s ease-in-out infinite;
+  }
+  @keyframes float1{
+    0%,100%{transform:translate(0,0);}
+    50%{transform:translate(-25px, 30px);}
+  }
+  @keyframes float2{
+    0%,100%{transform:translate(0,0);}
+    50%{transform:translate(20px, -25px);}
+  }
+  .hero-inner{position:relative; z-index:1;}
+
+  /* ---------- Scroll reveal ---------- */
+  .reveal{
+    opacity:0;
+    transform:translateY(24px);
+    transition:opacity .6s ease, transform .6s ease;
+  }
+  .reveal.visible{
+    opacity:1;
+    transform:translateY(0);
+  }
+  .reveal-stagger.visible .project,
+  .reveal-stagger.visible .connect-card,
+  .reveal-stagger.visible .about-card{
+    animation:fadeUp .55s ease both;
+  }
+  .projects .project:nth-child(1){animation-delay:.05s;}
+  .projects .project:nth-child(2){animation-delay:.15s;}
+  .projects .project:nth-child(3){animation-delay:.25s;}
+  .connect-grid .connect-card:nth-child(1){animation-delay:.05s;}
+  .connect-grid .connect-card:nth-child(2){animation-delay:.13s;}
+  .connect-grid .connect-card:nth-child(3){animation-delay:.21s;}
+  .connect-grid .connect-card:nth-child(4){animation-delay:.29s;}
+  .connect-grid .connect-card:nth-child(5){animation-delay:.37s;}
+  .about-grid .about-card:nth-child(1){animation-delay:.05s;}
+  .about-grid .about-card:nth-child(2){animation-delay:.18s;}
+  @keyframes fadeUp{
+    from{opacity:0; transform:translateY(18px);}
+    to{opacity:1; transform:translateY(0);}
+  }
+  .reveal-stagger .project,
+  .reveal-stagger .connect-card,
+  .reveal-stagger .about-card{
+    opacity:0;
+  }
+  .reveal-stagger.visible .project,
+  .reveal-stagger.visible .connect-card,
+  .reveal-stagger.visible .about-card{
+    opacity:1;
+  }
+
+  /* connect icon hover motion */
+  .connect-card:hover .connect-icon{
+    animation:iconPop .4s ease;
+  }
+  @keyframes iconPop{
+    0%{transform:scale(1) rotate(0);}
+    40%{transform:scale(1.15) rotate(-6deg);}
+    100%{transform:scale(1) rotate(0);}
+  }
+
+  /* project hover glow sweep */
+  .project{position:relative; overflow:hidden;}
+  .project::before{
+    content:'';
+    position:absolute;
+    top:0; left:-60%;
+    width:40%; height:100%;
+    background:linear-gradient(120deg, transparent, rgba(143,214,147,.06), transparent);
+    transform:skewX(-20deg);
+    transition:left .6s ease;
+  }
+  .project:hover::before{ left:120%; }
+
   @media (prefers-reduced-motion: reduce){
     *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important;}
     html{scroll-behavior:auto;}
@@ -407,6 +628,7 @@
 </head>
 <body>
 
+<div class="progress-bar" id="progressBar"></div>
 <div class="titlebar">
   <div class="titlebar-inner">
     <div class="dots"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></div>
@@ -420,29 +642,41 @@
 </div>
 
 <header class="hero container">
-  <p class="eyebrow">online — Lahore, Pakistan</p>
-  <h1>
-    <span class="punc">const</span> <span class="fn">dev</span> <span class="punc">=</span> <span class="str">"Hamdan Chughtai"</span><span class="punc">;</span><span class="cursor-blink"></span>
-  </h1>
-  <p class="tagline">
-    <span class="comment">// 18 years old, still early — and building anyway</span>
-    Coding enthusiast committed to hard work and learning. Currently deep in HTML, CSS and JavaScript, and documenting every step of the journey in public.
-  </p>
-  <div class="hero-actions">
-    <a class="btn primary" href="#projects">view projects →</a>
-    <a class="btn ghost" href="https://github.com/hamdanchughtai" target="_blank" rel="noopener">github ↗</a>
+  <div class="blob b1"></div>
+  <div class="blob b2"></div>
+  <div class="hero-inner">
+    <div class="hero-text">
+      <p class="eyebrow">online — Lahore, Pakistan</p>
+      <h1>
+        <span class="punc">const</span> <span class="fn">dev</span> <span class="punc">=</span> <span class="str">"</span><span class="str" id="typedName"></span><span class="str">"</span><span class="punc">;</span><span class="cursor-blink"></span>
+      </h1>
+      <p class="tagline">
+        <span class="comment">// 20 years old, still early — and building anyway</span>
+        Coding enthusiast committed to hard work and learning. Currently deep in HTML, CSS and JavaScript, and documenting every step of the journey in public.
+      </p>
+      <div class="hero-actions">
+        <a class="btn primary" href="#projects">view projects →</a>
+        <a class="btn ghost" href="https://github.com/hamdanchughtai" target="_blank" rel="noopener">github ↗</a>
+      </div>
+    </div>
+    <div class="hero-photo">
+      <div class="photo-frame">
+        <div class="photo-tab">avatar.jpg</div>
+        <img src="avatar.jpg" alt="Portrait of Hamdan Chughtai">
+      </div>
+    </div>
   </div>
 </header>
 
 <section id="about" class="container">
-  <div class="section-head">
+  <div class="section-head reveal">
     <h2>about</h2>
   </div>
-  <div class="about-grid">
+  <div class="about-grid reveal-stagger reveal">
     <div class="about-card">
       <div class="label">profile</div>
       <dl class="kv">
-        <dt>age</dt><dd>18</dd>
+        <dt>age</dt><dd>20</dd>
         <dt>base</dt><dd>Lahore, Pakistan</dd>
         <dt>focus</dt><dd>Web Development</dd>
         <dt>status</dt><dd>learning &amp; building</dd>
@@ -450,14 +684,16 @@
       <p style="margin-top:16px;">Started coding from scratch and hasn't stopped — every project is a step further into web development, one language at a time.</p>
     </div>
     <div class="about-card">
-      <div class="label">stack &amp; learning</div>
+      <div class="label">languages learned</div>
       <div class="skills-list">
-        <span class="skill-pill">HTML</span>
-        <span class="skill-pill">CSS</span>
-        <span class="skill-pill">JavaScript</span>
-        <span class="skill-pill">C++</span>
-        <span class="skill-pill">Git &amp; GitHub</span>
-        <span class="skill-pill learning">currently leveling up →</span>
+        <span class="skill-pill learned"><span class="check">✓</span>C++</span>
+        <span class="skill-pill learned"><span class="check">✓</span>HTML</span>
+        <span class="skill-pill learned"><span class="check">✓</span>CSS</span>
+      </div>
+      <div class="label" style="margin-top:20px;">currently learning</div>
+      <div class="skills-list">
+        <span class="skill-pill learning">JavaScript →</span>
+        <span class="skill-pill learning">Git &amp; GitHub →</span>
       </div>
       <p style="margin-top:16px;">Comfortable with the fundamentals of the web and structured programming, and actively expanding into more advanced frontend work.</p>
     </div>
@@ -465,11 +701,11 @@
 </section>
 
 <section id="projects" class="container">
-  <div class="section-head">
+  <div class="section-head reveal">
     <h2>projects</h2>
     <span class="tag">/ repositories</span>
   </div>
-  <div class="projects">
+  <div class="projects reveal-stagger reveal">
 
     <div class="project">
       <div class="project-top">
@@ -494,10 +730,10 @@
 </section>
 
 <section id="connect" class="container">
-  <div class="section-head">
+  <div class="section-head reveal">
     <h2>connect</h2>
   </div>
-  <div class="connect-grid">
+  <div class="connect-grid reveal-stagger reveal">
 
     <a class="connect-card" href="https://github.com/hamdanchughtai" target="_blank" rel="noopener">
       <span class="connect-icon"><svg viewBox="0 0 24 24" fill="#dfe1ea"><path d="M12 .5C5.73.5.5 5.73.5 12c0 5.09 3.29 9.39 7.86 10.91.57.1.79-.25.79-.55 0-.27-.01-1-.02-1.96-3.2.7-3.88-1.54-3.88-1.54-.52-1.34-1.28-1.7-1.28-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.2 1.77 1.2 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.23-1.28-5.23-5.69 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.64 1.59.24 2.76.12 3.05.74.8 1.19 1.83 1.19 3.09 0 4.42-2.69 5.4-5.25 5.68.42.36.78 1.08.78 2.17 0 1.57-.01 2.83-.01 3.22 0 .3.21.66.79.55A10.52 10.52 0 0 0 23.5 12C23.5 5.73 18.27.5 12 .5Z"/></svg></span>
@@ -514,9 +750,18 @@
       <span class="connect-meta"><div class="name">Threads</div><div class="handle">@hamdan_chughtai</div></span>
     </a>
 
-    <a class="connect-card" href="https://linktr.ee/hamdanchughtai" target="_blank" rel="noopener">
+  </div>
+
+  <div class="connect-wide reveal-stagger reveal">
+
+    <a class="connect-card wide" href="https://linktr.ee/hamdanchughtai" target="_blank" rel="noopener">
       <span class="connect-icon"><svg viewBox="0 0 24 24" fill="#dfe1ea"><path d="M12 2 2 7l10 5 10-5Zm-10 8v7l10 5V15Zm20 0-10 5v7l10-5Z"/></svg></span>
       <span class="connect-meta"><div class="name">All links</div><div class="handle">linktr.ee/hamdanchughtai</div></span>
+    </a>
+
+    <a class="connect-card wide" href="mailto:hamdanchughtai25@gmail.com">
+      <span class="connect-icon"><svg viewBox="0 0 24 24" fill="#dfe1ea"><path d="M2 4h20v16H2V4Zm2 2v.01L12 12l8-5.99V6H4Zm16 12V8.24l-7.4 5.55a1 1 0 0 1-1.2 0L4 8.24V18h16Z"/></svg></span>
+      <span class="connect-meta"><div class="name">Email</div><div class="handle">hamdanchughtai25@gmail.com</div></span>
     </a>
 
   </div>
@@ -524,13 +769,58 @@
 
 <footer class="container">
   <div class="footer-inner">
-    <p>© <span id="year"></span> Hamdan Chughtai — built with HTML, CSS &amp; JS</p>
+    <p>© <span id="year"></span> Hamdan Chughtai — <a href="mailto:hamdanchughtai25@gmail.com" style="color:var(--accent-green);">hamdanchughtai25@gmail.com</a></p>
     <div class="status"><span class="dot-live"></span> available for collaboration</div>
   </div>
 </footer>
 
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
+
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Scroll progress bar
+  var progressBar = document.getElementById('progressBar');
+  function updateProgress(){
+    var h = document.documentElement;
+    var scrolled = h.scrollTop;
+    var max = h.scrollHeight - h.clientHeight;
+    progressBar.style.width = (max > 0 ? (scrolled / max) * 100 : 0) + '%';
+  }
+  document.addEventListener('scroll', updateProgress, { passive: true });
+  updateProgress();
+
+  // Typewriter effect for hero name
+  var typedEl = document.getElementById('typedName');
+  var fullName = 'Hamdan Chughtai';
+  if (reduceMotion) {
+    typedEl.textContent = fullName;
+  } else {
+    var i = 0;
+    (function typeChar(){
+      if (i <= fullName.length) {
+        typedEl.textContent = fullName.slice(0, i);
+        i++;
+        setTimeout(typeChar, 65);
+      }
+    })();
+  }
+
+  // Scroll-reveal via IntersectionObserver
+  var revealEls = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window && !reduceMotion) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+    revealEls.forEach(function(el){ io.observe(el); });
+  } else {
+    revealEls.forEach(function(el){ el.classList.add('visible'); });
+  }
 </script>
 
 </body>
