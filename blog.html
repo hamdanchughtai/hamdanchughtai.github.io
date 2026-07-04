@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog — Hamdan Chughtai</title>
+<meta name="description" content="Build logs and write-ups from Hamdan Chughtai's projects.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%2314151a%22/><text x=%2250%22 y=%2266%22 font-size=%2255%22 fill=%22%238fd693%22 font-family=%22monospace%22 text-anchor=%22middle%22>&lt;/&gt;</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+<div class="titlebar">
+  <div class="titlebar-inner">
+    <div class="dots"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></div>
+    <div class="path">~<span class="sep">/</span>hamdan<span class="sep">/</span><span class="file">blog.html</span></div>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">☰</button>
+    <nav class="tabs" id="navTabs">
+      <a href="index.html">home</a>
+      <a href="about.html">about</a>
+      <a href="projects.html">projects</a>
+      <a href="blog.html" class="active">blog</a>
+      <a href="uses.html">uses</a>
+      <a href="resume.html">resume</a>
+      <a href="contact.html">contact</a>
+    </nav>
+  </div>
+</div>
+
+<header class="page-header container">
+  <p class="eyebrow">// blog</p>
+  <h1 class="page-title">Build <span class="str">logs</span></h1>
+  <p class="page-sub">Write-ups on how each project actually got built — the planning, the mistakes, and what I learned. One post per project, as they get written.</p>
+</header>
+
+<section class="container">
+  <div class="section-head reveal"><h2>planned posts</h2></div>
+
+  <div class="blog-list reveal-stagger reveal">
+    <div class="blog-card">
+      <div class="blog-meta"><span class="badge">◐ coming soon</span><span>·</span><span>~6 min read</span></div>
+      <div class="blog-title">How I Built My Portfolio</div>
+      <div class="blog-excerpt">The design decisions, the animations, and the mistakes behind this site.</div>
+      <div class="blog-tags"><span class="blog-tag">HTML</span><span class="blog-tag">CSS</span><span class="blog-tag">JavaScript</span></div>
+    </div>
+
+    <div class="blog-card">
+      <div class="blog-meta"><span class="badge">◐ coming soon</span><span>·</span><span>~8 min read</span></div>
+      <div class="blog-title">University Management System in C++</div>
+      <div class="blog-excerpt">Breaking down the logic and structure behind the university records program.</div>
+      <div class="blog-tags"><span class="blog-tag">C++</span><span class="blog-tag">OOP</span></div>
+    </div>
+
+    <div class="blog-card">
+      <div class="blog-meta"><span class="badge">◐ coming soon</span><span>·</span><span>~7 min read</span></div>
+      <div class="blog-title">Building My ESP32 Smart Home</div>
+      <div class="blog-excerpt">Wiring, firmware, and the automation logic behind the smart home setup.</div>
+      <div class="blog-tags"><span class="blog-tag">ESP32</span><span class="blog-tag">IoT</span></div>
+    </div>
+
+    <div class="blog-card">
+      <div class="blog-meta"><span class="badge">◐ coming soon</span><span>·</span><span>~5 min read</span></div>
+      <div class="blog-title">Setting Up Home Assistant</div>
+      <div class="blog-excerpt">Self-hosting Home Assistant and connecting it to smart devices.</div>
+      <div class="blog-tags"><span class="blog-tag">Home Assistant</span><span class="blog-tag">Linux</span></div>
+    </div>
+
+    <div class="blog-card">
+      <div class="blog-meta"><span class="badge">◐ coming soon</span><span>·</span><span>~5 min read</span></div>
+      <div class="blog-title">Modding Minecraft: What I Learned</div>
+      <div class="blog-excerpt">Notes from tinkering with Minecraft mods and modding tools.</div>
+      <div class="blog-tags"><span class="blog-tag">Minecraft</span><span class="blog-tag">Modding</span></div>
+    </div>
+  </div>
+
+  <div class="empty-state reveal" style="margin-top:24px;">
+    <div class="big">No posts published yet</div>
+    These are queued up and will go live as they're written. Check back soon, or <a href="contact.html" style="color:var(--accent-green);">get in touch</a> if there's a project you'd like written up first.
+  </div>
+</section>
+
+<footer class="container">
+  <div class="footer-inner">
+    <div class="f-links">
+      <a href="index.html">home</a>
+      <a href="about.html">about</a>
+      <a href="projects.html">projects</a>
+      <a href="contact.html">contact</a>
+    </div>
+    <div class="status"><span class="dot-live"></span> available for collaboration</div>
+  </div>
+  <p style="margin-top:14px;">© <span id="year"></span> Hamdan Chughtai — built with HTML, CSS &amp; JS</p>
+</footer>
+
+<button class="chat-fab" id="chatToggle" aria-label="Ask about Hamdan" aria-expanded="false">
+  <span class="pulse-ring"></span>
+  <span aria-hidden="true">?</span>
+</button>
+<div class="chat-panel" id="chatPanel" role="dialog" aria-label="Ask about Hamdan">
+  <div class="chat-header">
+    <div class="dots"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></div>
+    <div class="title">~/<span class="file">ask-hamdan</span></div>
+    <button class="chat-close" id="chatClose" aria-label="Close chat">✕</button>
+  </div>
+  <div class="chat-messages" id="chatMessages">
+    <div class="chat-msg bot"><span class="prompt-mark">$</span>Hey, I'm a quick assistant trained on Hamdan's info. Ask me about his age, skills, projects, or how to reach him.</div>
+  </div>
+  <div class="chat-suggestions" id="chatSuggestions">
+    <span class="chat-chip" data-q="What languages does he know?">languages?</span>
+    <span class="chat-chip" data-q="What projects has he built?">projects?</span>
+    <span class="chat-chip" data-q="How can I contact him?">contact?</span>
+    <span class="chat-chip" data-q="How old is he and where is he from?">who is he?</span>
+  </div>
+  <div class="chat-input-row">
+    <input type="text" id="chatInput" placeholder="Ask something..." autocomplete="off">
+    <button class="chat-send" id="chatSend">send</button>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Uses — Hamdan Chughtai</title>
+<meta name="description" content="The tools, software, and gear Hamdan Chughtai uses.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%2314151a%22/><text x=%2250%22 y=%2266%22 font-size=%2255%22 fill=%22%238fd693%22 font-family=%22monospace%22 text-anchor=%22middle%22>&lt;/&gt;</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+<div class="titlebar">
+  <div class="titlebar-inner">
+    <div class="dots"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></div>
+    <div class="path">~<span class="sep">/</span>hamdan<span class="sep">/</span><span class="file">uses.html</span></div>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">☰</button>
+    <nav class="tabs" id="navTabs">
+      <a href="index.html">home</a>
+      <a href="about.html">about</a>
+      <a href="projects.html">projects</a>
+      <a href="blog.html">blog</a>
+      <a href="uses.html" class="active">uses</a>
+      <a href="resume.html">resume</a>
+      <a href="contact.html">contact</a>
+    </nav>
+  </div>
+</div>
+
+<header class="page-header container">
+  <p class="eyebrow">// uses</p>
+  <h1 class="page-title">What I <span class="str">use</span></h1>
+  <p class="page-sub">The setup, software, and tools behind the projects on this site.</p>
+</header>
+
+<section class="container">
+  <div class="uses-grid reveal-stagger reveal">
+    <div class="uses-group">
+      <div class="label">hardware</div>
+      <ul class="uses-list">
+        <li>Laptop <span class="u-note">[add model]</span></li>
+        <li>Keyboard <span class="u-note">[add model]</span></li>
+        <li>Mouse <span class="u-note">[add model]</span></li>
+        <li>Monitor <span class="u-note">[add model]</span></li>
+        <li>ESP32 dev boards <span class="u-note">for IoT builds</span></li>
+      </ul>
+    </div>
+
+    <div class="uses-group">
+      <div class="label">software &amp; dev</div>
+      <ul class="uses-list">
+        <li>Editor <span class="u-note">VS Code</span></li>
+        <li>Terminal <span class="u-note">[add your shell/terminal]</span></li>
+        <li>OS <span class="u-note">Linux</span></li>
+        <li>Version control <span class="u-note">Git &amp; GitHub</span></li>
+        <li>Containers <span class="u-note">Docker</span></li>
+        <li>Home automation <span class="u-note">Home Assistant</span></li>
+      </ul>
+    </div>
+
+    <div class="uses-group">
+      <div class="label">hosting &amp; web</div>
+      <ul class="uses-list">
+        <li>Hosting <span class="u-note">GitHub Pages</span></li>
+        <li>Domain <span class="u-note">hamdanchughtai.dev</span></li>
+        <li>Web server <span class="u-note">[add Nginx / other if used]</span></li>
+      </ul>
+    </div>
+
+    <div class="uses-group">
+      <div class="label">other tools</div>
+      <ul class="uses-list">
+        <li>AI assistant <span class="u-note">Claude</span></li>
+        <li>Browser <span class="u-note">[add your browser]</span></li>
+        <li>Design <span class="u-note">[add design tools, if any]</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="placeholder-note" style="margin-top:24px;">A lot of these are placeholders — send me your actual laptop model, terminal, browser, and any other specifics and I'll swap them in.</div>
+</section>
+
+<footer class="container">
+  <div class="footer-inner">
+    <div class="f-links">
+      <a href="index.html">home</a>
+      <a href="about.html">about</a>
+      <a href="projects.html">projects</a>
+      <a href="contact.html">contact</a>
+    </div>
+    <div class="status"><span class="dot-live"></span> available for collaboration</div>
+  </div>
+  <p style="margin-top:14px;">© <span id="year"></span> Hamdan Chughtai — built with HTML, CSS &amp; JS</p>
+</footer>
+
+<button class="chat-fab" id="chatToggle" aria-label="Ask about Hamdan" aria-expanded="false">
+  <span class="pulse-ring"></span>
+  <span aria-hidden="true">?</span>
+</button>
+<div class="chat-panel" id="chatPanel" role="dialog" aria-label="Ask about Hamdan">
+  <div class="chat-header">
+    <div class="dots"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></div>
+    <div class="title">~/<span class="file">ask-hamdan</span></div>
+    <button class="chat-close" id="chatClose" aria-label="Close chat">✕</button>
+  </div>
+  <div class="chat-messages" id="chatMessages">
+    <div class="chat-msg bot"><span class="prompt-mark">$</span>Hey, I'm a quick assistant trained on Hamdan's info. Ask me about his age, skills, projects, or how to reach him.</div>
+  </div>
+  <div class="chat-suggestions" id="chatSuggestions">
+    <span class="chat-chip" data-q="What languages does he know?">languages?</span>
+    <span class="chat-chip" data-q="What projects has he built?">projects?</span>
+    <span class="chat-chip" data-q="How can I contact him?">contact?</span>
+    <span class="chat-chip" data-q="How old is he and where is he from?">who is he?</span>
+  </div>
+  <div class="chat-input-row">
+    <input type="text" id="chatInput" placeholder="Ask something..." autocomplete="off">
+    <button class="chat-send" id="chatSend">send</button>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

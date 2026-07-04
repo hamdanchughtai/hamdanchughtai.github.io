@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resume — Hamdan Chughtai</title>
+<meta name="description" content="Hamdan Chughtai's resume.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%2314151a%22/><text x=%2250%22 y=%2266%22 font-size=%2255%22 fill=%22%238fd693%22 font-family=%22monospace%22 text-anchor=%22middle%22>&lt;/&gt;</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+<div class="titlebar">
+  <div class="titlebar-inner">
+    <div class="dots"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></div>
+    <div class="path">~<span class="sep">/</span>hamdan<span class="sep">/</span><span class="file">resume.html</span></div>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">☰</button>
+    <nav class="tabs" id="navTabs">
+      <a href="index.html">home</a>
+      <a href="about.html">about</a>
+      <a href="projects.html">projects</a>
+      <a href="blog.html">blog</a>
+      <a href="uses.html">uses</a>
+      <a href="resume.html" class="active">resume</a>
+      <a href="contact.html">contact</a>
+    </nav>
+  </div>
+</div>
+
+<header class="page-header container">
+  <p class="eyebrow">// resume</p>
+  <h1 class="page-title">Résumé</h1>
+  <p class="page-sub">A downloadable PDF resume is on the way.</p>
+</header>
+
+<section class="container">
+  <div class="resume-box reveal">
+    <div class="icon">📄</div>
+    <h3>Not uploaded yet</h3>
+    <p>Once a resume PDF is ready, a download button will live right here. In the meantime, email directly for experience, education, and background.</p>
+    <a class="btn primary" href="mailto:hamdanchughtai25@gmail.com">email for a copy →</a>
+  </div>
+  <div class="placeholder-note" style="margin-top:20px;">Send me a PDF resume (or tell me what to include) and I'll wire up a real download button here.</div>
+</section>
+
+<footer class="container">
+  <div class="footer-inner">
+    <div class="f-links">
+      <a href="index.html">home</a>
+      <a href="about.html">about</a>
+      <a href="projects.html">projects</a>
+      <a href="contact.html">contact</a>
+    </div>
+    <div class="status"><span class="dot-live"></span> available for collaboration</div>
+  </div>
+  <p style="margin-top:14px;">© <span id="year"></span> Hamdan Chughtai — built with HTML, CSS &amp; JS</p>
+</footer>
+
+<button class="chat-fab" id="chatToggle" aria-label="Ask about Hamdan" aria-expanded="false">
+  <span class="pulse-ring"></span>
+  <span aria-hidden="true">?</span>
+</button>
+<div class="chat-panel" id="chatPanel" role="dialog" aria-label="Ask about Hamdan">
+  <div class="chat-header">
+    <div class="dots"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></div>
+    <div class="title">~/<span class="file">ask-hamdan</span></div>
+    <button class="chat-close" id="chatClose" aria-label="Close chat">✕</button>
+  </div>
+  <div class="chat-messages" id="chatMessages">
+    <div class="chat-msg bot"><span class="prompt-mark">$</span>Hey, I'm a quick assistant trained on Hamdan's info. Ask me about his age, skills, projects, or how to reach him.</div>
+  </div>
+  <div class="chat-suggestions" id="chatSuggestions">
+    <span class="chat-chip" data-q="What languages does he know?">languages?</span>
+    <span class="chat-chip" data-q="What projects has he built?">projects?</span>
+    <span class="chat-chip" data-q="How can I contact him?">contact?</span>
+    <span class="chat-chip" data-q="How old is he and where is he from?">who is he?</span>
+  </div>
+  <div class="chat-input-row">
+    <input type="text" id="chatInput" placeholder="Ask something..." autocomplete="off">
+    <button class="chat-send" id="chatSend">send</button>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

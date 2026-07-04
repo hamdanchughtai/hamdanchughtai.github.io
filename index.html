@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hamdan Chughtai — Developer</title>
+<meta name="description" content="Hamdan Chughtai — 20, Lahore, Pakistan. Computer Science student, web developer, and builder.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%2314151a%22/><text x=%2250%22 y=%2266%22 font-size=%2255%22 fill=%22%238fd693%22 font-family=%22monospace%22 text-anchor=%22middle%22>&lt;/&gt;</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+<div class="titlebar">
+  <div class="titlebar-inner">
+    <div class="dots"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></div>
+    <div class="path">~<span class="sep">/</span>hamdan<span class="sep">/</span><span class="file">index.html</span></div>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">☰</button>
+    <nav class="tabs" id="navTabs">
+      <a href="index.html" class="active">home</a>
+      <a href="about.html">about</a>
+      <a href="projects.html">projects</a>
+      <a href="blog.html">blog</a>
+      <a href="uses.html">uses</a>
+      <a href="resume.html">resume</a>
+      <a href="contact.html">contact</a>
+    </nav>
+  </div>
+</div>
+
+<header class="hero container">
+  <div class="blob b1"></div>
+  <div class="blob b2"></div>
+  <div class="hero-inner">
+    <div class="hero-text">
+      <p class="eyebrow">online — Lahore, Pakistan</p>
+      <h1>
+        <span class="punc">const</span> <span class="fn">dev</span> <span class="punc">=</span> <span class="str">"</span><span class="str" id="typedName"></span><span class="str">"</span><span class="punc">;</span><span class="cursor-blink"></span>
+      </h1>
+      <p class="tagline">
+        <span class="comment">// computer science student, web developer, and builder</span>
+        I enjoy creating websites, IoT systems, and automation tools — experimenting with software and hardware while documenting everything I learn along the way.
+      </p>
+      <div class="hero-actions">
+        <a class="btn primary" href="projects.html">view projects →</a>
+        <a class="btn ghost" href="blog.html">read blog</a>
+        <a class="btn ghost" href="resume.html">resume</a>
+      </div>
+    </div>
+    <div class="hero-photo">
+      <div class="photo-frame">
+        <div class="photo-tab">avatar.jpg</div>
+        <img src="avatar.jpg" alt="Portrait of Hamdan Chughtai">
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="container">
+  <div class="section-head reveal">
+    <h2>quick glance</h2>
+  </div>
+  <div class="about-grid reveal-stagger reveal">
+    <div class="about-card">
+      <div class="label">what I'm into</div>
+      <div class="skills-list">
+        <span class="skill-pill">Web Development</span>
+        <span class="skill-pill">Backend</span>
+        <span class="skill-pill">Linux</span>
+        <span class="skill-pill">ESP32</span>
+        <span class="skill-pill">IoT</span>
+        <span class="skill-pill">Automation</span>
+        <span class="skill-pill">Minecraft Modding</span>
+        <span class="skill-pill">Open Source</span>
+      </div>
+    </div>
+    <div class="about-card">
+      <div class="label">right now</div>
+      <p>Studying Computer Science, building a mix of web and hardware projects, and slowly turning this site into a proper build log. New posts and projects land regularly — <a href="blog.html" style="color:var(--accent-green);">follow along on the blog</a>.</p>
+    </div>
+  </div>
+</section>
+
+<footer class="container">
+  <div class="footer-inner">
+    <div class="f-links">
+      <a href="about.html">about</a>
+      <a href="projects.html">projects</a>
+      <a href="blog.html">blog</a>
+      <a href="contact.html">contact</a>
+    </div>
+    <div class="status"><span class="dot-live"></span> available for collaboration</div>
+  </div>
+  <p style="margin-top:14px;">© <span id="year"></span> Hamdan Chughtai — built with HTML, CSS &amp; JS</p>
+</footer>
+
+<button class="chat-fab" id="chatToggle" aria-label="Ask about Hamdan" aria-expanded="false">
+  <span class="pulse-ring"></span>
+  <span aria-hidden="true">?</span>
+</button>
+<div class="chat-panel" id="chatPanel" role="dialog" aria-label="Ask about Hamdan">
+  <div class="chat-header">
+    <div class="dots"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></div>
+    <div class="title">~/<span class="file">ask-hamdan</span></div>
+    <button class="chat-close" id="chatClose" aria-label="Close chat">✕</button>
+  </div>
+  <div class="chat-messages" id="chatMessages">
+    <div class="chat-msg bot"><span class="prompt-mark">$</span>Hey, I'm a quick assistant trained on Hamdan's info. Ask me about his age, skills, projects, or how to reach him.</div>
+  </div>
+  <div class="chat-suggestions" id="chatSuggestions">
+    <span class="chat-chip" data-q="What languages does he know?">languages?</span>
+    <span class="chat-chip" data-q="What projects has he built?">projects?</span>
+    <span class="chat-chip" data-q="How can I contact him?">contact?</span>
+    <span class="chat-chip" data-q="How old is he and where is he from?">who is he?</span>
+  </div>
+  <div class="chat-input-row">
+    <input type="text" id="chatInput" placeholder="Ask something..." autocomplete="off">
+    <button class="chat-send" id="chatSend">send</button>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
