@@ -198,7 +198,8 @@ h1 .punc{color:var(--comment);}
 .page-header .page-sub{margin-top:14px; color:var(--muted); font-size:16px; max-width:62ch;}
 
 /* ---------- Section scaffolding ---------- */
-section{padding:60px 0;}
+section{padding:88px 0;}
+@media (max-width:768px){ section{padding:56px 0;} }
 .section-head{
   display:flex; align-items:baseline; gap:10px; margin-bottom:30px;
   border-bottom:1px solid var(--border); padding-bottom:14px;
@@ -327,7 +328,50 @@ section{padding:60px 0;}
 }
 .empty-state .big{font-family:var(--mono); font-size:15px; color:var(--text); margin-bottom:8px;}
 
-/* ---------- Uses page ---------- */
+/* ---------- Blog post (prose) ---------- */
+.back-link{
+  font-family:var(--mono); font-size:13px; color:var(--accent-green);
+  display:inline-flex; align-items:center; gap:6px; margin-bottom:22px;
+}
+.back-link:hover{text-decoration:underline;}
+.post-meta{
+  font-family:var(--mono); font-size:12px; color:var(--comment);
+  display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-bottom:8px;
+}
+.post-tags{display:flex; gap:6px; flex-wrap:wrap; margin:14px 0 0;}
+.prose{padding-bottom:20px;}
+.prose h2{font-family:var(--mono); color:#fff; font-size:21px; margin:38px 0 14px; letter-spacing:-0.01em;}
+.prose h2:first-child{margin-top:0;}
+.prose h3{font-family:var(--mono); color:var(--accent-green); font-size:15.5px; margin:26px 0 10px;}
+.prose p{color:var(--text); font-size:15.5px; line-height:1.8; margin-bottom:16px;}
+.prose ul{margin:0 0 18px 22px; color:var(--text); font-size:15px; line-height:1.7;}
+.prose li{margin-bottom:6px;}
+.prose table{width:100%; border-collapse:collapse; margin:22px 0; font-size:13px; font-family:var(--mono);}
+.prose th, .prose td{border:1px solid var(--border); padding:9px 11px; text-align:left;}
+.prose th{background:var(--surface-2); color:var(--accent-green);}
+.prose img{width:100%; border-radius:10px; border:1px solid var(--border); margin:24px 0; display:block;}
+.prose figcaption{font-family:var(--mono); font-size:12px; color:var(--comment); text-align:center; margin-top:-14px; margin-bottom:24px;}
+.prose .callout{
+  background:var(--surface); border-left:3px solid var(--accent-amber);
+  padding:14px 18px; border-radius:6px; margin:22px 0; font-size:14.5px; color:var(--muted);
+}
+.prose .callout strong{color:var(--text);}
+.prose hr{border:none; border-top:1px solid var(--border); margin:34px 0;}
+.prose code{
+  font-family:var(--mono); font-size:13.5px; color:var(--accent-green);
+  background:var(--surface-2); border:1px solid var(--border);
+  padding:2px 6px; border-radius:4px;
+}
+.prose pre{
+  background:var(--surface); border:1px solid var(--border); border-radius:8px;
+  padding:16px 18px; overflow-x:auto; margin:20px 0;
+}
+.prose pre code{
+  background:none; border:none; padding:0; color:var(--text);
+  font-size:13px; line-height:1.6; white-space:pre;
+}
+
+
 .uses-grid{display:grid; grid-template-columns:1fr 1fr; gap:28px;}
 @media (max-width:700px){ .uses-grid{grid-template-columns:1fr;} }
 .uses-group .label{
@@ -340,15 +384,6 @@ section{padding:60px 0;}
   display:flex; justify-content:space-between; gap:12px;
 }
 .uses-list li .u-note{color:var(--comment); font-family:var(--mono); font-size:12.5px; text-align:right;}
-
-/* ---------- Resume ---------- */
-.resume-box{
-  background:var(--surface); border:1px solid var(--border); border-radius:10px;
-  padding:36px 28px; text-align:center;
-}
-.resume-box .icon{font-size:34px; margin-bottom:14px;}
-.resume-box h3{font-family:var(--mono); color:#fff; font-size:18px; margin-bottom:8px;}
-.resume-box p{color:var(--muted); font-size:14.5px; max-width:48ch; margin:0 auto 20px;}
 
 /* ---------- Contact ---------- */
 .connect-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:14px;}

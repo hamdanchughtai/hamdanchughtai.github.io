@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Courier Parcel Tracking System in C++ — Hamdan Chughtai</title>
+<meta name="description" content="Building a Courier Parcel Tracking System in C++ using parallel arrays, linear search, and a swap-and-shrink delete.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%2314151a%22/><text x=%2250%22 y=%2266%22 font-size=%2255%22 fill=%22%238fd693%22 font-family=%22monospace%22 text-anchor=%22middle%22>&lt;/&gt;</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+<div class="titlebar">
+  <div class="titlebar-inner">
+    <div class="dots"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></div>
+    <div class="path">~<span class="sep">/</span>hamdan<span class="sep">/</span>blog<span class="sep">/</span><span class="file">parcel-tracking-system.html</span></div>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">☰</button>
+    <nav class="tabs" id="navTabs">
+      <a href="index.html">home</a>
+      <a href="about.html">about</a>
+      <a href="projects.html">projects</a>
+      <a href="blog.html" class="active">blog</a>
+      <a href="uses.html">uses</a>
+      <a href="contact.html">contact</a>
+    </nav>
+  </div>
+</div>
+
+<header class="page-header container">
+  <a class="back-link" href="blog.html">← back to blog</a>
+  <p class="eyebrow">// blog post</p>
+  <h1 class="page-title">A Courier Parcel Tracking System in <span class="str">C++</span></h1>
+  <div class="post-meta"><span>~5 min read</span><span>·</span><span>Programming Fundamentals project</span></div>
+  <div class="post-tags"><span class="blog-tag">C++</span><span class="blog-tag">Arrays</span><span class="blog-tag">Data Handling</span></div>
+</header>
+
+<section class="container">
+  <div class="prose reveal">
+    <p>After building the University Management System with structures, I wanted to practice the same fundamentals a different way — so for this one I went with parallel arrays instead of a single struct, and built a console app that tracks parcels through a courier system from booking to delivery.</p>
+
+    <h2>The data model</h2>
+    <p>Instead of one array of a <code>Parcel</code> struct, each field gets its own array, all indexed by the same position:</p>
+    <ul>
+      <li><code>trackingID[]</code> — unique ID for each parcel</li>
+      <li><code>senderName[]</code> / <code>receiverName[]</code></li>
+      <li><code>city[]</code> — destination city</li>
+      <li><code>weight[]</code> — parcel weight in kg</li>
+      <li><code>status[]</code> — Booked, In Transit, or Delivered</li>
+    </ul>
+    <p>It's a more old-school way of organizing the data compared to structs, but it's a useful exercise in keeping several arrays in sync by index — every operation has to update all six arrays together or the record falls apart.</p>
+
+    <h2>Finding a parcel</h2>
+    <p>Every operation depends on being able to find a parcel by its tracking ID, so that logic lives in one shared function:</p>
+    <pre><code>int findParcel(string id) {
+  for (int i = 0; i &lt; total; i++) {
+    if (trackingID[i] == id) return i;
+  }
+  return -1;
+}</code></pre>
+    <p>It's a simple linear search, but reusing it everywhere — adding, searching, updating, deleting — meant I only had to get the "not found" handling right once.</p>
+
+    <h2>Booking a parcel</h2>
+    <p>Adding a parcel checks the array isn't full, then checks the tracking ID doesn't already exist using <code>findParcel</code>, before asking for the sender, receiver, destination city, and weight. Every new parcel starts life with the status <code>"Booked"</code> — nothing gets added in any other state.</p>
+
+    <h2>Updating status</h2>
+    <p>Parcels move through three stages: <strong>Booked → In Transit → Delivered</strong>. The update function looks the parcel up by tracking ID, shows the current status, and lets you pick the new one from a menu rather than typing free text — which avoids typos creating a status that doesn't match any of the three valid states.</p>
+
+    <h2>Deleting without leaving gaps</h2>
+    <p>This was the part I found most interesting. Deleting from the middle of an array normally means shifting every element after it back by one — which is slow and easy to get wrong across six parallel arrays at once. Instead, I used a swap-and-shrink approach: copy the <em>last</em> parcel's data into the slot being deleted, then shrink the count by one:</p>
+    <pre><code>trackingID[index] = trackingID[total - 1];
+senderName[index] = senderName[total - 1];
+receiverName[index] = receiverName[total - 1];
+city[index] = city[total - 1];
+weight[index] = weight[total - 1];
+status[index] = status[total - 1];
+total--;</code></pre>
+    <p>The order of parcels changes, but nothing else needs to move, and the operation stays fast no matter how many parcels are in the system.</p>
+
+    <h2>The menu</h2>
+    <p>Everything hangs off a single loop in <code>main()</code> with six options — add, display all, search, update status, delete, and exit — each calling its own dedicated function. Keeping <code>main()</code> to just the menu and the dispatch logic made it much easier to test each feature on its own.</p>
+
+    <h2>What I'd improve next</h2>
+    <p>Parallel arrays work, but they make it easy to update one array and forget another — a risk structs don't have. If I extended this project, moving to a struct (or a small class) per parcel would remove that whole category of bug, and adding persistence with file handling — like I did in the University Management System — would let the tracking data survive between runs instead of resetting every time the program closes.</p>
+
+    <h2>What I learned</h2>
+    <p>This project reinforced how much of "real" software is really just careful bookkeeping — keeping related data in sync, searching efficiently, and handling edge cases like deleting from the middle of a collection without breaking everything else. It's a smaller project than the University Management System, but it approaches the same kind of problem from a different angle, which is exactly why I built it.</p>
+  </div>
+</section>
+
+<footer class="container">
+  <div class="footer-inner">
+    <div class="f-links">
+      <a href="index.html">home</a>
+      <a href="about.html">about</a>
+      <a href="projects.html">projects</a>
+      <a href="blog.html">blog</a>
+    </div>
+    <div class="status"><span class="dot-live"></span> available for collaboration</div>
+  </div>
+  <p style="margin-top:14px;">© <span id="year"></span> Hamdan Chughtai — built with HTML, CSS &amp; JS</p>
+</footer>
+
+<button class="chat-fab" id="chatToggle" aria-label="Ask about Hamdan" aria-expanded="false">
+  <span class="pulse-ring"></span>
+  <span aria-hidden="true">?</span>
+</button>
+<div class="chat-panel" id="chatPanel" role="dialog" aria-label="Ask about Hamdan">
+  <div class="chat-header">
+    <div class="dots"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></div>
+    <div class="title">~/<span class="file">ask-hamdan</span></div>
+    <button class="chat-close" id="chatClose" aria-label="Close chat">✕</button>
+  </div>
+  <div class="chat-messages" id="chatMessages">
+    <div class="chat-msg bot"><span class="prompt-mark">$</span>Hey, I'm a quick assistant trained on Hamdan's info. Ask me about his age, skills, projects, or how to reach him.</div>
+  </div>
+  <div class="chat-suggestions" id="chatSuggestions">
+    <span class="chat-chip" data-q="What languages does he know?">languages?</span>
+    <span class="chat-chip" data-q="What projects has he built?">projects?</span>
+    <span class="chat-chip" data-q="How can I contact him?">contact?</span>
+    <span class="chat-chip" data-q="How old is he and where is he from?">who is he?</span>
+    <span class="chat-chip" data-q="Is he available for freelance or internships?">availability?</span>
+  </div>
+  <div class="chat-input-row">
+    <input type="text" id="chatInput" placeholder="Ask something..." autocomplete="off">
+    <button class="chat-send" id="chatSend">send</button>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
