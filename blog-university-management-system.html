@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How I Built a University Management System in C++ — Hamdan Chughtai</title>
+<meta name="description" content="Building a University Management System in C++ for a Programming Fundamentals course — modules, structures, file handling, and schedule-conflict logic.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%2314151a%22/><text x=%2250%22 y=%2266%22 font-size=%2255%22 fill=%22%238fd693%22 font-family=%22monospace%22 text-anchor=%22middle%22>&lt;/&gt;</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+<div class="titlebar">
+  <div class="titlebar-inner">
+    <div class="dots"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></div>
+    <div class="path">~<span class="sep">/</span>hamdan<span class="sep">/</span>blog<span class="sep">/</span><span class="file">university-management-system.html</span></div>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">☰</button>
+    <nav class="tabs" id="navTabs">
+      <a href="index.html">home</a>
+      <a href="about.html">about</a>
+      <a href="projects.html">projects</a>
+      <a href="blog.html" class="active">blog</a>
+      <a href="uses.html">uses</a>
+      <a href="contact.html">contact</a>
+    </nav>
+  </div>
+</div>
+
+<header class="page-header container">
+  <a class="back-link" href="blog.html">← back to blog</a>
+  <p class="eyebrow">// blog post</p>
+  <h1 class="page-title">A University Management System in <span class="str">C++</span></h1>
+  <div class="post-meta"><span>~8 min read</span><span>·</span><span>Programming Fundamentals project</span></div>
+  <div class="post-tags"><span class="blog-tag">C++</span><span class="blog-tag">File Handling</span><span class="blog-tag">Data Structures</span></div>
+</header>
+
+<section class="container">
+  <div class="prose reveal">
+    <p>During my second semester of BS Computer Science, I was assigned to build a complete Programming Fundamentals project in C++. Instead of choosing a small calculator or library system like many students, I wanted to build something that solved a real-world problem while helping me practice the concepts we'd learned in class. That's how I ended up building a University Management System.</p>
+    <p>The goal was to simulate how a university manages students, courses, enrollments, schedules, and records — using only the tools we'd covered in class. No databases, no advanced frameworks. Everything had to run on arrays, structures, functions, loops, file handling, and conditionals.</p>
+
+    <h2>Planning the project</h2>
+    <p>Before writing any code, I mapped out how a university system actually works and listed the main entities involved: students, courses, enrollments, and schedules. From there, I split the project into separate modules instead of writing everything inside <code>main()</code> — separate menus for Course Management, Student Management, Schedule Management, and System Statistics. That modular approach made debugging much easier, since every feature had its own dedicated functions.</p>
+
+    <h2>Designing the data</h2>
+    <p>Since we hadn't learned Object-Oriented Programming yet, I used plain C++ <code>struct</code>s. One structure held course data — ID, name, credit hours, time slot. Another held student data — name, ID, registered courses, and a count of how many courses they'd registered for. Everything lived in arrays rather than vectors or a database, to match the course requirements.</p>
+
+    <h2>Course management</h2>
+    <p>The first feature I built lets the administrator add, edit, remove, search, and view courses. Every new course gets a unique, auto-generated ID, which prevents duplicates and makes searching straightforward. I added input validation throughout so bad input wouldn't crash the program.</p>
+
+    <h2>Student management</h2>
+    <p>Next came student management — registering, editing, removing, searching, and viewing students. One feature I was glad I added early was duplicate Student ID checking: before registering anyone, the program checks whether that ID already exists and rejects the registration if it does. Small feature, but it taught me a lot about how real systems maintain data integrity.</p>
+
+    <h2>The enrollment system</h2>
+    <p>This ended up being the most interesting part of the whole project. Students can enroll in multiple courses, but I wanted to catch the kinds of mistakes that happen during real registration. Before confirming an enrollment, the system checks:</p>
+    <ul>
+      <li>Whether the student already exists</li>
+      <li>Whether the course exists</li>
+      <li>Whether the student is already enrolled in it</li>
+      <li>Whether the maximum course limit has been reached</li>
+      <li>Whether two courses share the same time slot</li>
+    </ul>
+    <p>That last check took the most thought. Every course has a time slot — Morning, Afternoon, or Evening — and before enrolling a student, the program compares the new course against everything they're already registered for. If two time slots collide, enrollment is rejected with a "Schedule Conflict" message. This was probably my favorite feature, because it made the whole thing feel much closer to a real university system than a class assignment.</p>
+
+    <h2>Schedules and statistics</h2>
+    <p>Once enrollment worked, I added a schedule viewer that shows course name, time slot, and credit hours for everything a student is registered in, and automatically totals their credit hours. On top of that, a statistics page shows total students, total courses, and total enrollments — a quick snapshot of the system's current state.</p>
+
+    <h2>Making data survive a restart</h2>
+    <p>Early on, all the data disappeared the moment the program closed — everything lived in memory only. I fixed that with file handling: the program now saves all course data, student data, and enrollment records to text files on exit, and reloads them automatically the next time it starts. That was the first time I'd built something that preserved state between sessions, and it made the whole project feel a lot more like real software.</p>
+
+    <h2>Polishing the experience</h2>
+    <p>Even though it's a console application, I tried to make it pleasant to use: clear menu navigation, screen clearing between operations, formatted tables using <code>iomanip</code>, input validation everywhere, clear success/error messages, and pause screens after important actions.</p>
+
+    <h2>What went wrong along the way</h2>
+    <p>The biggest challenge was keeping students and courses in sync without a database — every link had to be found and updated manually. Deleting a course meant also removing it from every student's enrollment list, or you'd end up with dangling references. File handling took real planning to make sure saved data restored correctly. And input validation reminded me, over and over, that users will always find a way to enter something unexpected.</p>
+
+    <h2>What I actually learned</h2>
+    <p>This project taught me a lot more than C++ syntax. I got real practice breaking a big problem into smaller modules, designing structured programs, working with structs and arrays, reading and writing files, validating input, searching and updating records, and building menu-driven applications that don't fall over. More than anything, it changed how I approach a problem — instead of writing code as I go, I plan the flow of the application first.</p>
+
+    <h2>Looking back</h2>
+    <p>This was one of my first complete software projects, and it gave me the confidence to take on bigger applications. I work with web development and IoT now, but the fundamentals from this project — modular design, data management, validation, problem-solving — are still the foundation everything else is built on.</p>
+  </div>
+</section>
+
+<footer class="container">
+  <div class="footer-inner">
+    <div class="f-links">
+      <a href="index.html">home</a>
+      <a href="about.html">about</a>
+      <a href="projects.html">projects</a>
+      <a href="blog.html">blog</a>
+    </div>
+    <div class="status"><span class="dot-live"></span> available for collaboration</div>
+  </div>
+  <p style="margin-top:14px;">© <span id="year"></span> Hamdan Chughtai — built with HTML, CSS &amp; JS</p>
+</footer>
+
+<button class="chat-fab" id="chatToggle" aria-label="Ask about Hamdan" aria-expanded="false">
+  <span class="pulse-ring"></span>
+  <span aria-hidden="true">?</span>
+</button>
+<div class="chat-panel" id="chatPanel" role="dialog" aria-label="Ask about Hamdan">
+  <div class="chat-header">
+    <div class="dots"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></div>
+    <div class="title">~/<span class="file">ask-hamdan</span></div>
+    <button class="chat-close" id="chatClose" aria-label="Close chat">✕</button>
+  </div>
+  <div class="chat-messages" id="chatMessages">
+    <div class="chat-msg bot"><span class="prompt-mark">$</span>Hey, I'm a quick assistant trained on Hamdan's info. Ask me about his age, skills, projects, or how to reach him.</div>
+  </div>
+  <div class="chat-suggestions" id="chatSuggestions">
+    <span class="chat-chip" data-q="What languages does he know?">languages?</span>
+    <span class="chat-chip" data-q="What projects has he built?">projects?</span>
+    <span class="chat-chip" data-q="How can I contact him?">contact?</span>
+    <span class="chat-chip" data-q="How old is he and where is he from?">who is he?</span>
+    <span class="chat-chip" data-q="Is he available for freelance or internships?">availability?</span>
+  </div>
+  <div class="chat-input-row">
+    <input type="text" id="chatInput" placeholder="Ask something..." autocomplete="off">
+    <button class="chat-send" id="chatSend">send</button>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

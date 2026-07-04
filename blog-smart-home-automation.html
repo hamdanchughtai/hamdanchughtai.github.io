@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Home Automation with ESP8266, Arduino IoT Cloud & Google Home — Hamdan Chughtai</title>
+<meta name="description" content="Building a smart home controller with a NodeMCU ESP8266, relays, physical wall switches, Arduino IoT Cloud, and Google Home integration.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%2314151a%22/><text x=%2250%22 y=%2266%22 font-size=%2255%22 fill=%22%238fd693%22 font-family=%22monospace%22 text-anchor=%22middle%22>&lt;/&gt;</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+<div class="titlebar">
+  <div class="titlebar-inner">
+    <div class="dots"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></div>
+    <div class="path">~<span class="sep">/</span>hamdan<span class="sep">/</span>blog<span class="sep">/</span><span class="file">smart-home-automation.html</span></div>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">☰</button>
+    <nav class="tabs" id="navTabs">
+      <a href="index.html">home</a>
+      <a href="about.html">about</a>
+      <a href="projects.html">projects</a>
+      <a href="blog.html" class="active">blog</a>
+      <a href="uses.html">uses</a>
+      <a href="contact.html">contact</a>
+    </nav>
+  </div>
+</div>
+
+<header class="page-header container">
+  <a class="back-link" href="blog.html">← back to blog</a>
+  <p class="eyebrow">// blog post</p>
+  <h1 class="page-title">Smart Home Automation with <span class="str">ESP8266</span></h1>
+  <div class="post-meta"><span>~7 min read</span><span>·</span><span>ESP8266, Arduino IoT Cloud, Google Home</span></div>
+  <div class="post-tags"><span class="blog-tag">ESP8266</span><span class="blog-tag">IoT</span><span class="blog-tag">Google Home</span></div>
+</header>
+
+<section class="container">
+  <div class="prose reveal">
+    <p>As part of my journey into IoT and embedded systems, I designed and built a smart home automation system that lets me control electrical appliances through physical wall switches, the Arduino IoT Cloud dashboard, the Google Home app, and Google Assistant voice commands. This isn't a prototype sitting in a drawer — it's installed in my room and I use it every day.</p>
+    <p>The goal was never just to automate a light switch. It was to actually understand how microcontrollers, cloud services, and smart home ecosystems work together — from picking the hardware and designing the wiring, to integrating Google Home and debugging the firmware. Every engineering decision here was mine. I used AI to generate an initial version of the code, then reviewed, modified, and customized it to match my exact hardware and requirements.</p>
+
+    <figure>
+      <img src="smart-home-wiring.jpg" alt="Wiring diagram for the NodeMCU ESP8266 smart home controller, showing 4 relays and 4 latching switches">
+      <figcaption>Wiring diagram — NodeMCU ESP8266 controller, 4 relays + 4 latching switches</figcaption>
+    </figure>
+
+    <h2>Hardware</h2>
+    <p>The project is built around a NodeMCU ESP8266, chosen for its built-in Wi-Fi, low cost, and solid Arduino support. A 4-channel active-low relay module controls four household appliances, while four physical wall switches provide manual control.</p>
+
+    <h3>GPIO configuration</h3>
+    <table>
+      <thead><tr><th>Function</th><th>NodeMCU Pin</th><th>GPIO</th></tr></thead>
+      <tbody>
+        <tr><td>Relay 1 (Fan)</td><td>D1</td><td>GPIO5</td></tr>
+        <tr><td>Relay 2 (Light 1)</td><td>D2</td><td>GPIO4</td></tr>
+        <tr><td>Relay 3 (Light 2)</td><td>D5</td><td>GPIO14</td></tr>
+        <tr><td>Relay 4 (Light 3)</td><td>D6</td><td>GPIO12</td></tr>
+        <tr><td>Switch 1 (Fan)</td><td>D7</td><td>GPIO13 (to GND)</td></tr>
+        <tr><td>Switch 2 (Light 1)</td><td>D3</td><td>GPIO0 (to GND)</td></tr>
+        <tr><td>Switch 3 (Light 2)</td><td>D4</td><td>GPIO2 (to GND)</td></tr>
+        <tr><td>Switch 4 (Light 3)</td><td>D8</td><td>GPIO15 (to 3.3V)</td></tr>
+      </tbody>
+    </table>
+    <p>The relay module is powered from the NodeMCU's VIN and GND pins. Switches 1–3 use the ESP8266's internal pull-up resistors and connect to GND, while Switch 4 connects to 3.3V instead — GPIO15 is a boot pin that has to stay LOW during startup, so the firmware handles that inverted logic automatically.</p>
+
+    <h2>Features</h2>
+    <ul>
+      <li>Control through physical wall switches</li>
+      <li>Remote access via Arduino IoT Cloud</li>
+      <li>Google Home integration</li>
+      <li>Google Assistant voice commands</li>
+      <li>Google Nest Mini support</li>
+      <li>Automatic synchronization between every control method</li>
+      <li>Reliable software debouncing</li>
+      <li>Modular, maintainable firmware</li>
+    </ul>
+    <p>Whether I flip a wall switch, tap a button in the Google Home app, or say "Hey Google, turn on the fan," every interface immediately reflects the correct state.</p>
+
+    <h2>Software architecture</h2>
+    <p>The firmware runs on the Arduino IDE and is split into modular components: <code>SmartHome.ino</code> as the main program, <code>RelayControl</code> for relay operations, <code>SwitchControl</code> for reading physical switches and debouncing, plus <code>thingProperties.h</code> for Arduino IoT Cloud properties and <code>arduino_secrets.h</code> for Wi-Fi credentials and device keys.</p>
+    <p>The ESP8266 stays connected to Arduino IoT Cloud over Wi-Fi, keeping cloud variables in sync with the relay states. Every time a relay changes state, the firmware pushes that update to the cloud — so Google Home, Arduino Cloud, and the physical hardware always agree on the current status.</p>
+
+    <h2>Google Home integration</h2>
+    <p>I already run two Google Nest Mini speakers and a Wi-Fi-controlled AC in my room, so folding this project into my existing Google Home setup was straightforward. After linking my Arduino IoT Cloud account to Google Home, all four appliances showed up as smart devices — controllable from the app or with commands like "Hey Google, turn on the fan" or "turn on all lights." Those commands route through Google Home to Arduino IoT Cloud, which updates the ESP8266 in real time.</p>
+
+    <h2>Challenges</h2>
+    <p>Picking the right GPIO pins was the first real hurdle — some ESP8266 pins have special boot functions, and using them the wrong way can stop the board from starting at all. I wired GPIO15 differently from the other switches and adjusted the firmware to handle its inverted logic. Keeping physical switches and cloud state in sync was another one: every state change, local or remote, has to update the cloud variable immediately so nothing falls out of sync. Software debouncing was necessary too, to stop mechanical switch bounce from firing false triggers.</p>
+
+    <h2>How it actually got built</h2>
+    <p>AI helped generate a starting version of the firmware, but that's all it was — a starting point. I planned the full system architecture, picked every hardware component, designed the wiring, connected and tested each device, modified and optimized the generated code, solved the synchronization issues, fixed the boot-pin problems, and integrated everything with Google Home myself. Using AI as an assistant let me spend more time on the hardware and the logic instead of writing boilerplate.</p>
+
+    <h2>What I learned</h2>
+    <p>This project gave me hands-on experience with embedded systems, IoT concepts, ESP8266 programming, GPIO management, relay interfacing, Wi-Fi networking, Arduino IoT Cloud, Google Home integration, voice assistant automation, modular software design, and hardware troubleshooting. More than the individual skills, it taught me how hardware, software, and cloud services actually work together to make something reliable.</p>
+
+    <div class="callout"><strong>What's next:</strong> OTA firmware updates, temperature/humidity sensors, energy monitoring, motion detection, automation schedules, push notifications, and a proper 3D-printed enclosure.</div>
+
+    <p>This is one of my favorite projects — it mixes electronics, embedded programming, networking, and cloud services into something I actually rely on every day. It also reinforced how AI can be used responsibly as a development tool while still requiring real engineering knowledge to design, customize, and maintain the finished system.</p>
+  </div>
+</section>
+
+<footer class="container">
+  <div class="footer-inner">
+    <div class="f-links">
+      <a href="index.html">home</a>
+      <a href="about.html">about</a>
+      <a href="projects.html">projects</a>
+      <a href="blog.html">blog</a>
+    </div>
+    <div class="status"><span class="dot-live"></span> available for collaboration</div>
+  </div>
+  <p style="margin-top:14px;">© <span id="year"></span> Hamdan Chughtai — built with HTML, CSS &amp; JS</p>
+</footer>
+
+<button class="chat-fab" id="chatToggle" aria-label="Ask about Hamdan" aria-expanded="false">
+  <span class="pulse-ring"></span>
+  <span aria-hidden="true">?</span>
+</button>
+<div class="chat-panel" id="chatPanel" role="dialog" aria-label="Ask about Hamdan">
+  <div class="chat-header">
+    <div class="dots"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></div>
+    <div class="title">~/<span class="file">ask-hamdan</span></div>
+    <button class="chat-close" id="chatClose" aria-label="Close chat">✕</button>
+  </div>
+  <div class="chat-messages" id="chatMessages">
+    <div class="chat-msg bot"><span class="prompt-mark">$</span>Hey, I'm a quick assistant trained on Hamdan's info. Ask me about his age, skills, projects, or how to reach him.</div>
+  </div>
+  <div class="chat-suggestions" id="chatSuggestions">
+    <span class="chat-chip" data-q="What languages does he know?">languages?</span>
+    <span class="chat-chip" data-q="What projects has he built?">projects?</span>
+    <span class="chat-chip" data-q="How can I contact him?">contact?</span>
+    <span class="chat-chip" data-q="How old is he and where is he from?">who is he?</span>
+    <span class="chat-chip" data-q="Is he available for freelance or internships?">availability?</span>
+  </div>
+  <div class="chat-input-row">
+    <input type="text" id="chatInput" placeholder="Ask something..." autocomplete="off">
+    <button class="chat-send" id="chatSend">send</button>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
